@@ -5,14 +5,26 @@ import './App.css';
 
 function App() {
 
-  const nayoks = ["Anwar", "Jafar", "Alamgir", "Salman", "Shuvo", "Kanchon"];
+  const userAPI = "https://jsonplaceholder.typicode.com/users";
 
-  const products = [
-    {name: "Photoshop", price: "$90.99"},
-    {name: "Illustrator", price: "$60.99"},
-    {name: "PDF Reader", price: "$6.99"},
-    {name: "Premiere", price: "$269.99"}
-  ];
+  const [nayoks, setNayoks] = useState([]);
+
+  useEffect(() => {
+    fetch(userAPI)
+    .then(res => res.json())
+    .then(data => {
+      setNayoks(data)
+    })
+  }, [])
+
+  // const nayoks = [{name: "Anwar", age: "56"}, {name: "Anwar", age: "56"}, {name: "Anwar", age: "56"}, {name: "Anwar", age: "56"}, {name: "Anwar", age: "56"}, {name: "Anwar", age: "56"}];
+
+  // const products = [
+  //   {name: "Photoshop", price: "$90.99"},
+  //   {name: "Illustrator", price: "$60.99"},
+  //   {name: "PDF Reader", price: "$6.99"},
+  //   {name: "Premiere", price: "$269.99"}
+  // ];
 
   // const productNames = products.map(product => product.name);
 
@@ -50,7 +62,7 @@ function App() {
         <p style={{backgroundColor: "black", borderRadius: "5px"}}>{`${person1.name} ${person1.job}`}</p>
         <p>{`${person2.name} ${person2.job}`}</p> */}
 
-        <Counter></Counter>
+        {/* <Counter></Counter>
 
         <Users></Users>
 
@@ -71,16 +83,23 @@ function App() {
 
         {
           products.map(product => <Product product={product}></Product>)
-        }
+        } */}
 
         {/* <Product product={products[0]}></Product>
         <Product product={products[1]}></Product>
         <Product product={products[2]}></Product> */}
 
-        <Person name={nayoks[0]} food="Fuchka" nayika="Moushumi"></Person>
+        {/* <Person name={nayoks[0]} food="Fuchka" nayika="Moushumi"></Person>
         <Person name="Jashim" food="Fuchka" nayika="Shabana"></Person>
         <Person name="Elias" food="Fuchka" nayika="Apple"></Person>
-        <Person name="BappaRaz" food="Fuchka" nayika="Cheka"></Person>
+        <Person name="BappaRaz" food="Fuchka" nayika="Cheka"></Person> */}
+
+
+        <MovieCounter></MovieCounter>
+
+        {
+          nayoks.map(nayok => <Nayok name={nayok.name} age={nayok.age} key={nayok.id}></Nayok>)
+        }
 
 
       </header>
@@ -93,76 +112,110 @@ function App() {
 
 //components, such as Person, start with a capital letter
 
-function Users(){
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-    .then(res => res.json())
-    .then(data => {
-      setUsers(data)
-    }, []);
-  })
-  return (
-    <div>
-      <h3>Dynamic User: {users.length}</h3>
-      <ul>
-        {
-          users.map(user => <li>{user.name} : {user.phone}</li>)
-        }
-      </ul>
-    </div>
-  )
-}
+// function Users(){
+//   const [users, setUsers] = useState([]);
+//   useEffect(() => {
+//     fetch("https://jsonplaceholder.typicode.com/users")
+//     .then(res => res.json())
+//     .then(data => {
+//       setUsers(data)
+//     }, []);
+//   })
+//   return (
+//     <div>
+//       <h3>Dynamic User: {users.length}</h3>
+//       <ul>
+//         {
+//           users.map(user => <li>{user.name} : {user.phone}</li>)
+//         }
+//       </ul>
+//     </div>
+//   )
+// }
 
-function Counter(){
-  const [count, setCount] = useState(10);
+// function Counter(){
+//   const [count, setCount] = useState(10);
 
-  return(
-    <div>
-      <h1>Count: {count}</h1>
-      <button onMouseMove={() => setCount(count - 1)}>Decrease</button>
-      <button onClick={() => setCount(count + 1)}>Increase</button>
-    </div>
-  )
-}
+//   return(
+//     <div>
+//       <h1>Count: {count}</h1>
+//       <button onMouseMove={() => setCount(count - 1)}>Decrease</button>
+//       <button onClick={() => setCount(count + 1)}>Increase</button>
+//     </div>
+//   )
+// }
 
-function Product(props){
+// function Product(props){
 
-  const productStyle = {
-    border: "1px solid gray",
-    borderRadius: "5px",
-    backgroundColor : "lightgray",
-    height: "200px",
-    width: "200px",
-    float: "left"
-  }
+//   const productStyle = {
+//     border: "1px solid gray",
+//     borderRadius: "5px",
+//     backgroundColor : "lightgray",
+//     height: "200px",
+//     width: "200px",
+//     float: "left"
+//   }
 
-  const {name, price} = props.product;
+//   const {name, price} = props.product;
 
-  return(
-    <div style={productStyle}>
-      <h3>{name}</h3>
-      <h4>{price}</h4>
-      <button>Buy Now</button>
-    </div>
-  )
-}
+//   return(
+//     <div style={productStyle}>
+//       <h3>{name}</h3>
+//       <h4>{price}</h4>
+//       <button>Buy Now</button>
+//     </div>
+//   )
+// }
 
 
-function Person(props) {
+// function Person(props) {
 
-  const personStyle = {
+//   const personStyle = {
+//     border: "2px solid cyan",
+//     margin: "10px",
+//     width: "400px"
+//   }
+
+//   return (
+//     <div style={personStyle}>
+//       <h1>Name: {props.name}</h1>
+//       <h3>Hero of {props.nayika}</h3>
+//     </div>
+//   )
+// }
+
+function Nayok(props) {
+  const nayokStyle = {
     border: "2px solid cyan",
-    margin: "10px",
-    width: "400px"
+    margin: "20px"
   }
-
   return (
-    <div style={personStyle}>
-      <h1>Name: {props.name}</h1>
-      <h3>Hero of {props.nayika}</h3>
+    <div style={nayokStyle}>
+      <h1>{props.name}</h1>
+      <h3>I have done 5 movies in {props.age || 30} years</h3>
     </div>
   )
+}
+
+function MovieCounter() {
+  let [count, setCount] = useState(5);
+
+  const handleClick = () => setCount(++count);
+
+  return (
+    <div>
+      <button onClick = {handleClick}>Add Movies</button>
+      <h3>Number of movies: {count}</h3>
+      <MovieDisplay movies={count}></MovieDisplay>
+      <MovieDisplay movies={count + 10}></MovieDisplay>
+      <MovieDisplay movies={count + 20}></MovieDisplay>
+      <MovieDisplay movies={count + 30}></MovieDisplay>
+    </div>
+  )
+}
+
+function MovieDisplay(props){
+return <h3>Movies I have acted in: {props.movies}</h3>
 }
 
 export default App;
